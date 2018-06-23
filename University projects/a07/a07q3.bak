@@ -1,0 +1,28 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a07q3) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; A Token is a non-empty Str that contains only lowercase letters
+
+(define-struct wordinfo (rank misspellings))
+;; A WordInfo is a (make-wordinfo Nat (listof Token))
+;; Requires:
+;;    rank is a positive integer representing the frequency of the
+;;       word as it is used in the English language
+;;    misspellings is a list of common misspellings of the word
+
+;; An Entry is a (list Token WordInfo)
+;; where
+;;   the first item is the key to the dictionary
+;;   the second item is information associated with the key
+
+;; A Dictionary is one of
+;;   * empty
+;;   * (cons Entry Dictionary)
+;; Requires:
+;;   keys are unique in the Dictionary
+;;   keys cannot appear as entries in any misspellings lists in the Dictionary
+
+;; Constants for testing
+(define sample-dict
+  (list (list "the" (make-wordinfo 1 (list "teh" "th")))
+        (list "there" (make-wordinfo 53 (list "ther" "theer" "th")))))

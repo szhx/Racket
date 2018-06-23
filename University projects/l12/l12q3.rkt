@@ -1,0 +1,19 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname l12q3) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;A leaf-labelled tree (LLT) is one of
+;;  * empty
+;;  * (cons Num LLT)
+;;  * (cons LLT LLT) where the first LLt is non-empty
+
+(define (llt-count info LLT)
+  (cond
+    [(empty? LLT) 0]
+    [(number? (first LLT))
+     (cond
+       [(= info (first LLT))
+        (+ 1 (llt-count info (rest LLT)))]
+       [else (llt-count info (rest LLT))])]
+    [(cons? (first LLT))
+     (+ (llt-count info (first LLT))
+        (llt-count info (rest LLT)))])) 

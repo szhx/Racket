@@ -1,0 +1,22 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname l10q2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct binode (op arg1 arg2))
+;; A Binary arithmetic expression Internal Node (BINode) 
+;;      is a (make-binode (anyof '* '+ '/ '-) BinExp BinExp) 
+
+;;A Binary arithmetic expression (BinExp) is one of:
+;; * a Num
+;; * a BINode
+
+(define (count-ops ex)
+  (cond
+    [(number? ex) 0]
+    [(and (number? (binode-arg1 ex))
+          (number? (binode-arg2 ex))) 1]
+    [(number? (binode-arg1 ex))
+     (+ 1 (count-ops (binode-arg2 ex)))]
+    [(number? (binode-arg2 ex))
+     (+ 1 (count-ops (binode-arg1 ex)))]
+    [else (+ 1 (count-ops (binode-arg1 ex))
+             (count-ops (binode-arg2 ex)))]))

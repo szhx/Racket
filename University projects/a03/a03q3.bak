@@ -1,0 +1,27 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a03q3) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; The following constants specify the expected format for the days of the week
+(define sunday "Sunday")
+(define monday "Monday")
+(define tuesday "Tuesday")
+(define wednesday "Wednesday")
+(define thursday "Thursday")
+(define friday "Friday")
+(define saturday "Saturday")
+
+(define (new-years-holidy year)
+  (cond
+    [(equal? (gauss year) 0) sunday]
+    [(equal? (gauss year) 1) monday]
+    [(equal? (gauss year) 2) tuesday]
+    [(equal? (gauss year) 3) wendesday]
+    [(equal? (gauss year) 4) thursday]
+    [(equal? (gauss year) 5) friday]
+    [(equal? (gauss year) 6) saturday]))
+
+(define (gauss A)
+  (remainder
+   (+ 1 (* 5 (remainder (- A 1) 4))
+      (* 4 (remainder (- A 1) 100))
+      (* 6 (remainder (- A 1) 400))) 7))

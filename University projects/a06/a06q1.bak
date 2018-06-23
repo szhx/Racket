@@ -1,0 +1,23 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a06q1) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; (even-up-odd-down n current) produces a list of n number of even
+;;   integers and n number of odd integers, and all of these
+;;   integers are larger than the current integer, the order of
+;;   the integers is that even integers are ascending and
+;;   odd integers are descending after all the even integers.
+;; even-up-odd-down: Nat Int -> (listof Int)
+;; Example:
+(check-expect (even-up-odd-down 2 5) (list 6 8 7 5))
+
+(define (even-up-odd-down n current)
+  (cond
+    [(= n 0) empty]
+    [else
+     (cond
+       [(even? current)
+        (cons current
+              (even-up-odd-down (sub1 n) (add1 current)))]
+       [else
+        (cons (even-up-odd-down (sub1 n) (add1 current))
+              (current empty))])]))

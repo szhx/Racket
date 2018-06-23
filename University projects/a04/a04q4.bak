@@ -1,0 +1,34 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a04q4) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; A Book-Price is (anyof Num false), where it is a number >= 0 if the 
+;;   book is available in the associated format, and false otherwise.
+
+
+(define-struct book-purchase (hardcover softcover ebook))
+;; A Book-Purchase is a 
+;;   (make-book-purchase Book-Price Book-Price Book-Price)
+;; Requires:
+;;   hardcover, softcover, and ebook, are the prices of the book if it
+;;     is available in the respective formats, and false otherwise.
+
+
+(define-struct textbook (title online purchase))
+;; A Textbook is a (make-textbook Str Str Book-Purchase), 
+;; Requires:
+;;   title is nonempty.
+;;   online is the empty string if the textbook is not available 
+;;     online; otherwise, it is the URL for the online text.
+;;   purchase provides the prices for the book in hardcover, 
+;;     softcover, and ebook format (if they are available).
+
+(define (cheapest-method text)
+  (cond
+    [(= textbook-online "")
+     (cond
+       [
+        
+(define (exist? book)
+  (cond
+    [(and (= book-purchase-hardcover false)
+        (

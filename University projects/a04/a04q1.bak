@@ -1,0 +1,42 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a04q1) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct particle (type energy))
+;; A Particle is a (make-particle Sym Num)
+;; Requires:
+;;   type is 'photon, 'electron, or 'positron
+;;   energy is positive
+
+(define (collide p1 p2)
+  (cond
+    [(and (symbol=? (particle-type p1) 'photon)
+          (symbol=? (particle-type p2) 'electron))
+     (make-particle 'electron
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]
+    [(and (symbol=? (particle-type p2) 'photon)
+          (symbol=? (particle-type p1) 'electron))
+     (make-particle 'electron
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]
+    [(and (symbol=? (particle-type p1) 'photon)
+          (symbol=? (particle-type p2) 'positron))
+     (make-particle 'positron
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]
+    [(and (symbol=? (particle-type p2) 'photon)
+          (symbol=? (particle-type p1) 'positron))
+     (make-particle 'positron
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]
+    [(and (symbol=? (particle-type p1) 'positron)
+          (symbol=? (particle-type p2) 'electron))
+     (make-particle 'photon
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]
+    [(and (symbol=? (particle-type p2) 'positron)
+          (symbol=? (particle-type p1) 'electron))
+     (make-particle 'photon
+                    (+ (particle-energy p1)
+                       (particle-energy p2)))]))
+    

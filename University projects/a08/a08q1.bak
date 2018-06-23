@@ -1,0 +1,21 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a08q1) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct node (item left right))
+; A Node is a (make-node Num BT BT)
+; A binary tree (BT) is either
+; empty
+; (make-node Num BT BT)
+
+(define (size-balance? bt)
+  (cond
+    [(empty? bt) true]
+    [(and (empty? (node-left bt))
+          (empty? (node-right bt))) true]
+    [(and (empty? (node-left bt))
+          (empty? (node-left (node-right bt)))
+          (empty? (node-right (node-right bt)))) true]
+    [(and (empty? (node-right bt))
+          (empty? (node-left (node-left bt)))
+          (empty? (node-right (node-left bt)))) true]
+     

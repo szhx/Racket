@@ -1,0 +1,73 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname a03q2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define january "JAN")
+(define february "FEB")
+(define march "MAR")
+(define april "APR")
+(define may "MAY")
+(define june "JUN")
+(define july "JUL")
+(define august "AUG")
+(define september "SEP")
+(define october "OCT")
+(define november "NOV")
+(define december "DEC")
+
+
+(define (day-of-year date)
+  (cond
+    [(string=? january (get-month date))
+               (get-day date)]
+    [(string=? february (get-month date))
+               (+ (get-day date) 31)]
+    [(string=? march (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) 31)]
+    [(string=? april (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 2))]
+    [(string=? may (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 2) 30)]
+    [(string=? june (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 3) 30)]
+    [(string=? july (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 3) (* 30 2))]
+    [(string=? august (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 4) (* 30 2))]
+    [(string=? september (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 5) (* 30 2))]
+    [(string=? october (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 5) (* 30 3))]
+    [(string=? november (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 6) (* 30 3))]
+    [(string=? december (get-month date))
+               (+ (is-leap-year? (get-year date))
+                  (get-day date) (* 31 6) (* 30 4))]))
+
+(define (is-leap-year? yr)
+  (cond
+    [(= (remainder yr 400) 0) 29]
+    [(= (remainder yr 100) 0) 28]
+    [else
+     (cond
+       [(= (remainder yr 4) 0) 29]
+       [else 28])]))
+
+(define (get-month month)
+  (substring month 0 3))
+  
+(define (get-year year)
+  (string->number (substring year 7 11)))  
+
+(define (get-day day)
+  (string->number (substring day 4 6)))
+  
+    

@@ -1,0 +1,50 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname |sample tree|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct binode (op arg1 arg2))
+
+;; Constant
+(define sampletree
+  (make-binode
+   '+
+   (make-binode '* 5 (make-binode '- 6 3))
+   (make-binode '/ 8 (make-binode '+ 1 3))))
+
+;; Template
+;(define (my-binexp-fun t)
+;  (cond
+;    [(number? t) ...]
+;    [... (binode-op t) ...
+;         (my-binexp-fun (binode-arg1 t)) ...
+;         (my-binexp-fun (binode-arg2 t)) ...]))
+
+;; (preorder-traversal ex) produces a list of the nodes in ex
+;;   so they appear in the same order as prefix notation
+;; preorder-traversal: BinExp -> (listof (anyof Sym Num))
+;; Examples:
+(check-expect (preorder-traversal 7) (list 7))
+(check-expect (preorder-traversal sampletree)
+              (list '+ '* 5 '- 6 3 '/ 8 '+ 1 3))
+
+(define (preorder-traversal ex)
+  (cond
+    [(number? ex) (list ex)]
+    [else (cons (binode-op ex) 
+                (append (preorder-traversal (binode-arg1 ex))
+                        (preorder-traversal (binode-arg2 ex))))]))
+
+(define (inorder-traversal ex)
+  (cond
+    [(number? ex) (list ex)]
+    [else (append (preorder-traversal (binode-arg1 ex))
+                  (list (binode-op ex))
+                  (preorder-traversal (binode-arg2 ex)))]))
+
+(define (postorder-traversal ex)
+  (cond
+    [(number? ex) (list ex)]
+    [else (append (preorder-traversal (binode-arg1 ex))
+                  (preorder-traversal (binode-arg2 ex))
+                  (list (binode-op ex)))]))
+
+
